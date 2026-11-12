@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quiz Time! Gerak, Kecepatan, Waktu &amp; Jarak</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+<style>
+:root{--bg:#F7F4EA;--card:#fff;--tx:#2F3E2A;--sage:#A3B18A;--dk:#588157;--or:#F4A261;--br:#E76F51;--ok:#dff0d8;--no:#fde3dc;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1f2a1c;--card:#2b3827;--tx:#f1efe3;--ok:#2f4a2c;--no:#4d2d26}}
+:root[data-theme="dark"]{--bg:#1f2a1c;--card:#2b3827;--tx:#f1efe3;--ok:#2f4a2c;--no:#4d2d26}
+*{box-sizing:inherit}html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--tx);font-family:Nunito,system-ui,sans-serif;font-weight:600;line-height:1.5;padding:16px}
+.wrap{max-width:760px;margin:0 auto}
+.card{background:var(--card);border-radius:24px;padding:24px;box-shadow:0 8px 24px rgba(0,0,0,.12);border:2px solid var(--sage)}
+.hero{background:linear-gradient(135deg,#588157,#A3B18A);color:#fff;border:0;text-align:center;position:relative;overflow:hidden}
+.hero h1{font-size:clamp(2.2rem,9vw,3.6rem);margin:.2em 0;font-weight:800}
+.hero .sub{color:#F7F4EA;font-weight:800;letter-spacing:.04em}
+.big{font-size:3.2rem}
+button,.btn{font:inherit;font-weight:800;border:0;border-radius:16px;padding:14px 22px;cursor:pointer;background:var(--br);color:#fff;box-shadow:0 4px 0 rgba(0,0,0,.2);font-size:1.05rem}
+button:active{transform:translateY(2px)}button.alt{background:var(--dk)}button.or{background:var(--or);color:#2F3E2A}
+input{font:inherit;padding:12px 16px;border-radius:14px;border:2px solid var(--sage);width:100%;max-width:340px;background:var(--card);color:var(--tx)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;font-weight:800}
+.pill{background:var(--br);color:#fff;padding:6px 16px;border-radius:99px}
+.bar{height:12px;background:color-mix(in srgb,var(--sage) 40%,transparent);border-radius:9px;overflow:hidden;margin-bottom:16px}
+.bar i{display:block;height:100%;background:var(--br);transition:width .4s}
+.q{font-size:1.25rem;font-weight:800;margin:0 0 16px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.opts{grid-template-columns:1fr}}
+.opt{text-align:left;background:var(--dk);display:flex;gap:10px;align-items:center}
+.opt b{background:#ffffff33;border-radius:10px;padding:2px 10px}
+.opt.right{background:#2e7d32}.opt.wrong{background:#c62828}.opt:disabled{cursor:default;opacity:.85}.opt.right:disabled,.opt.wrong:disabled{opacity:1}
+.fb{margin-top:16px;border-radius:18px;padding:16px;animation:pop .35s}
+.fb.ok{background:var(--ok)}.fb.no{background:var(--no)}.fb h3{margin:0 0 6px;font-size:1.3rem}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:none;opacity:1}}
+.formula{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:14px 0}
+.formula div{border-radius:18px;padding:14px;text-align:center;color:#fff;font-size:1.5rem;font-weight:800}
+.formula small{display:block;font-size:.95rem}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.stats div{background:var(--bg);border-radius:16px;padding:12px;text-align:center;font-weight:800}
+.stats span{display:block;font-size:1.8rem;color:var(--br)}
+.pred{font-size:2rem;font-weight:800;color:var(--br);text-align:center;margin:8px 0}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.c{justify-content:center}
+.rev{border-left:6px solid var(--sage);padding:8px 12px;margin:10px 0;background:var(--bg);border-radius:10px}
+.rev.ok{border-color:#2e7d32}.rev.no{border-color:#c62828}
+.conf{position:fixed;top:-20px;font-size:1.6rem;animation:fall 3s linear forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+ul{padding-left:20px}
+</style></head><body><div class="wrap" id="app"></div>
+<script>
+const Q=[
+["Sebuah benda dikatakan bergerak jika ...",["Bentuknya berubah","Posisinya berubah terhadap titik acuan","Warnanya berubah","Massanya bertambah"],1,"Gerak adalah perubahan posisi benda terhadap titik acuan."],
+["Manakah yang termasuk contoh benda bergerak?",["Meja di dalam kelas","Gedung sekolah","Bus yang meninggalkan terminal","Pohon yang tertancap di tanah"],2,"Bus berpindah posisi terhadap terminal, sedangkan benda lainnya tetap pada posisinya."],
+["Panjang lintasan yang ditempuh suatu benda disebut ...",["Waktu","Jarak","Massa","Kecepatan"],1,"Jarak adalah panjang seluruh lintasan yang ditempuh benda."],
+["Kecepatan adalah besaran yang menyatakan ...",["Jarak tempuh tiap satuan waktu","Waktu tempuh tiap satuan jarak","Massa tiap satuan volume","Gaya tiap satuan luas"],0,"Kecepatan = jarak : waktu, yaitu jarak yang ditempuh tiap satuan waktu."],
+["Satuan kecepatan dalam SI adalah ...",["km/jam","m/s","m/menit","cm/jam"],1,"Dalam SI, jarak dalam meter (m) dan waktu dalam sekon (s), sehingga kecepatan dalam m/s."],
+["Seorang pelari menempuh 100 m dalam waktu 20 s. Kecepatan pelari tersebut adalah ...",["2 m/s","5 m/s","10 m/s","20 m/s"],1,"v = s : t = 100 m : 20 s = 5 m/s."],
+["Siswa bersepeda dengan kecepatan 3 m/s selama 60 s. Jarak yang ditempuh adalah ...",["20 m","63 m","180 m","360 m"],2,"s = v × t = 3 m/s × 60 s = 180 m."],
+["Mobil menempuh 120 km dalam 2 jam. Kecepatan mobil tersebut adalah ...",["40 km/jam","60 km/jam","80 km/jam","240 km/jam"],1,"v = 120 km : 2 jam = 60 km/jam."],
+["Kereta api berkecepatan 90 km/jam menempuh jarak 270 km. Waktu perjalanannya adalah ...",["2 jam","3 jam","4 jam","5 jam"],1,"t = s : v = 270 km : 90 km/jam = 3 jam."],
+["Seseorang berjalan di taman dengan kecepatan 1,5 m/s selama 10 menit. Jarak yang ditempuh adalah ...",["15 m","90 m","900 m","9.000 m"],2,"10 menit = 600 s. s = 1,5 × 600 = 900 m."],
+["Kecepatan 72 km/jam jika dinyatakan dalam m/s adalah ...",["7,2 m/s","20 m/s","36 m/s","72 m/s"],1,"72 km/jam = 72 × 1.000 m : 3.600 s = 20 m/s."],
+["Kecepatan 10 m/s jika dinyatakan dalam km/jam adalah ...",["18 km/jam","36 km/jam","60 km/jam","100 km/jam"],1,"10 m/s × 3,6 = 36 km/jam."],
+["Jarak rumah ke sekolah 2,4 km. Jika Dani bersepeda dengan kecepatan 4 m/s, waktu tempuhnya adalah ...",["6 menit","10 menit","15 menit","24 menit"],1,"2,4 km = 2.400 m. t = 2.400 : 4 = 600 s = 10 menit."],
+["Grafik jarak terhadap waktu berupa garis lurus miring ke atas menunjukkan bahwa benda bergerak dengan ...",["Kecepatan tetap","Kecepatan makin kecil","Diam","Kecepatan makin besar"],0,"Jarak bertambah sebanding dengan waktu, artinya kecepatan benda tetap."],
+["Mobil melaju dengan kecepatan 60 km/jam menempuh jarak 150 km. Waktu yang diperlukan adalah ...",["2 jam","2 jam 30 menit","3 jam","3 jam 30 menit"],1,"t = 150 : 60 = 2,5 jam = 2 jam 30 menit."],
+["Andi berlari 5 m/s dan Budi 4 m/s dari tempat yang sama searah. Setelah 10 s, selisih jarak keduanya adalah ...",["1 m","10 m","40 m","50 m"],1,"Andi: 50 m. Budi: 40 m. Selisih = 50 − 40 = 10 m."],
+["Dua kota berjarak 280 km. Kereta A (80 km/jam) dan kereta B (60 km/jam) berangkat bersamaan saling berhadapan. Mereka bertemu setelah ...",["1 jam","2 jam","3 jam","4 jam"],1,"Kecepatan gabungan = 140 km/jam. t = 280 : 140 = 2 jam."],
+["Perjalanan 60 km: 30 km pertama berkecepatan 60 km/jam, 30 km berikutnya 30 km/jam. Kecepatan rata-rata seluruh perjalanan adalah ...",["30 km/jam","40 km/jam","45 km/jam","50 km/jam"],1,"Waktu: 0,5 + 1 = 1,5 jam. Kecepatan rata-rata = 60 : 1,5 = 40 km/jam."],
+["Pelari menempuh 400 m dalam 50 s. Dengan kecepatan sama, jarak yang ditempuh dalam 1 menit adalah ...",["400 m","450 m","480 m","500 m"],2,"v = 400 : 50 = 8 m/s. s = 8 × 60 = 480 m."],
+["Mobil berkecepatan 20 m/s dan motor 54 km/jam. Pernyataan yang benar adalah ...",["Motor lebih cepat 5 m/s","Mobil lebih cepat 5 m/s","Kecepatan keduanya sama","Motor lebih cepat 34 m/s"],1,"54 km/jam = 15 m/s. Mobil (20 m/s) lebih cepat 5 m/s dari motor."]];
+const A=document.getElementById('app'),L='ABCD';
+let st;const lv=i=>i<5?'Mudah':i<15?'Sedang':'HOTS';
+function snd(ok){try{const c=new (window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sine';g.gain.value=.12;const f=ok?[660,880]:[300,200];o.frequency.setValueAtTime(f[0],c.currentTime);o.frequency.setValueAtTime(f[1],c.currentTime+.15);o.start();o.stop(c.currentTime+.35)}catch(e){}}
+function conf(){for(let i=0;i<40;i++){const e=document.createElement('div');e.className='conf';e.textContent=['🎉','⭐','🏅','🧡','🟢'][i%5];e.style.left=Math.random()*100+'vw';e.style.animationDelay=Math.random()*1.2+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),4500)}}
+function home(){st={n:0,i:0,score:0,ans:[],name:''};A.innerHTML=`<div class="card hero"><div class="big">🏎️ ⏱️ 🏁</div><h1>QUIZ TIME!</h1><div class="sub">GERAK, KECEPATAN, WAKTU &amp; JARAK</div><p>IPA Kelas 7 SMP</p><h2>SIAP MENJADI JUARA?</h2><input id="nm" placeholder="Tulis namamu" maxlength="40" aria-label="Nama siswa"><div class="row c"><button onclick="start()">MULAI QUIZ ▶</button></div></div>
+<div class="card" style="margin-top:16px"><h2>Petunjuk</h2><ul><li>20 soal pilihan ganda, 4 pilihan tiap soal.</li><li>Jawaban benar 10 poin, salah 0 poin.</li><li>Jawaban terkunci setelah dipilih dan pembahasan langsung tampil.</li></ul>
+<h2>Rumus Kilat ⚡</h2><div class="formula"><div style="background:var(--dk)">v = s : t<small>Kecepatan</small></div><div style="background:var(--br)">s = v × t<small>Jarak</small></div><div style="background:#d9822b">t = s : v<small>Waktu</small></div></div>
+<p>Jarak: m atau km • Waktu: s atau jam • Kecepatan: m/s atau km/jam • 1 m/s = 3,6 km/jam</p></div>`}
+function start(){st.name=(document.getElementById('nm').value||'').trim()||'Siswa';st.i=0;show()}
+function show(){const i=st.i,q=Q[i],done=st.ans[i]!==undefined;
+A.innerHTML=`<div class="card"><div class="top"><span>Soal ${i+1}/20 • ${lv(i)}</span><span class="pill">Skor: ${st.score}</span></div><div class="bar"><i style="width:${(i+(done?1:0))/20*100}%"></i></div><p class="q">${q[0]}</p><div class="opts">${q[1].map((o,k)=>`<button class="opt" onclick="pick(${k})"><b>${L[k]}</b>${o}</button>`).join('')}</div><div id="fb"></div></div>`;if(done)reveal()}
+function pick(k){const i=st.i;if(st.ans[i]!==undefined)return;st.ans[i]=k;const ok=k===Q[i][2];if(ok)st.score+=10;snd(ok);reveal()}
+function reveal(){const i=st.i,q=Q[i],k=st.ans[i],ok=k===q[2];
+document.querySelectorAll('.opt').forEach((b,j)=>{b.disabled=true;if(j===q[2])b.classList.add('right');else if(j===k)b.classList.add('wrong')});
+document.querySelector('.pill').textContent='Skor: '+st.score;document.querySelector('.bar i').style.width=(i+1)/20*100+'%';
+document.getElementById('fb').innerHTML=`<div class="fb ${ok?'ok':'no'}"><h3>${ok?'🎉 HEBAT! JAWABAN BENAR!':'💪 TETAP SEMANGAT! COBA PAHAMI PEMBAHASANNYA.'}</h3><div><b>Jawaban benar: ${L[q[2]]}. ${q[1][q[2]]}</b></div><div>${q[3]}</div><div class="row">${i>0?`<button class="alt" onclick="st.i--;show()">◀ KEMBALI</button>`:''}<button onclick="next()">${i<19?'LANJUTKAN ▶':'LIHAT HASIL ▶'}</button></div></div>`;
+document.getElementById('fb').scrollIntoView({behavior:'smooth',block:'nearest'})}
+function next(){if(st.i<19){st.i++;show()}else result()}
+function pred(p){return p>=90?'SUPERSTAR! 🌟':p>=80?'SANGAT BAIK! 🏅':p>=70?'BAIK! 👍':p>=60?'CUKUP! 🙂':'TETAP SEMANGAT! 💪'}
+function result(){const b=st.ans.filter((a,i)=>a===Q[i][2]).length,p=st.score/2;
+A.innerHTML=`<div class="card hero"><div class="big">🏆</div><h2>HASIL AKHIR</h2><h2>${st.name.replace(/[<>&]/g,'')}</h2></div><div class="card" style="margin-top:16px"><div class="stats"><div><span>${b}</span>Jawaban benar</div><div><span>${20-b}</span>Jawaban salah</div><div><span>${st.score}</span>Total skor</div><div><span>${p}%</span>Persentase</div></div><div class="pred">${pred(p)}</div><div class="row c"><button class="or" onclick="review()">LIHAT PEMBAHASAN</button><button onclick="home()">ULANGI QUIZ ↻</button></div></div>`;
+if(p>=60)conf()}
+function review(){A.innerHTML=`<div class="card"><h2>Kunci Jawaban &amp; Pembahasan</h2>${Q.map((q,i)=>{const ok=st.ans[i]===q[2];return`<div class="rev ${ok?'ok':'no'}"><b>${i+1}. ${q[0]}</b><br>Jawabanmu: ${st.ans[i]===undefined?'-':L[st.ans[i]]} • Kunci: ${L[q[2]]}. ${q[1][q[2]]}<br>${q[3]}</div>`}).join('')}<div class="row"><button class="alt" onclick="result()">◀ KEMBALI KE HASIL</button><button onclick="home()">ULANGI QUIZ ↻</button></div></div>`;window.scrollTo(0,0)}
+home();
+</script></body></html>
